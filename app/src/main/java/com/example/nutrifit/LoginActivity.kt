@@ -1,37 +1,47 @@
 package com.example.nutrifit
 
 import android.content.Intent
-import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var prefs: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val email = findViewById<EditText>(R.id.etEmail)
-        val password = findViewById<EditText>(R.id.etPassword)
+        prefs = getSharedPreferences("NutriFitPrefs", MODE_PRIVATE)
+
+        val etEmail = findViewById<EditText>(R.id.etEmail)
+        val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
-        val btnRegister = findViewById<Button>(R.id.btnGoRegister)
+        val tvIrRegistro = findViewById<TextView>(R.id.tvIrRegistro)
 
         btnLogin.setOnClickListener {
-            val user = email.text.toString()
-            val pass = password.text.toString()
+            val emailIngresado = etEmail.text.toString()
+            val passwordIngresado = etPassword.text.toString()
 
-            if (user.isNotEmpty() && pass.isNotEmpty()) {
-                // Aquí luego se conecta con Firebase o SQLite
+            val emailGuardado = prefs.getString("email", null)
+            val passwordGuardada = prefs.getString("password", null)
+
+            if (emailIngresado.isEmpty() || passwordIngresado.isEmpty()) {
+                Toast.makeText(this, "Por favor ingresa tus datos", Toast.LENGTH_SHORT).show()
+            } else if (emailIngresado == emailGuardado && passwordIngresado == passwordGuardada) {
+                Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
-                Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show()
             }
         }
 
-        btnRegister.setOnClickListener {
+        tvIrRegistro.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+            finish()
         }
     }
 }

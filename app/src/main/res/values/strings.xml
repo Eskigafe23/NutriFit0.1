@@ -1,3 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">NutriFit</string>
+    <string name="open">Abrir menú</string>
+    <string name="close">Cerrar menú</string>
+
+    <string name="nav_plan">Plan de Alimentación</string>
+    <string name="nav_tips">Tips de Nutrición</string>
+    <string name="nav_calorias">Calculadora de Calorías</string>
+
+    <string name="navigation_drawer_open">Abrir menú</string>
+    <string name="navigation_drawer_close">Cerrar menú</string>
 </resources>
