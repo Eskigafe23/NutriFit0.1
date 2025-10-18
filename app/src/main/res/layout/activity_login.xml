@@ -1,89 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:background="#FFFFFF"
+    android:padding="24dp"
+    tools:context=".LoginActivity">
 
-    <androidx.cardview.widget.CardView
+    <ImageView
+        android:src="@mipmap/ic_logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/circle_background"
+        android:padding="16dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="Logo" />
+
+    <EditText
+        android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="8dp"
-        android:padding="24dp"
-        android:layout_margin="16dp"
-        android:backgroundTint="#FFFFFF">
+        android:hint="Correo electrónico"
+        android:textColorHint="@color/black"
+        android:inputType="textEmailAddress"
+        android:textColor="#000000"
+        android:layout_marginBottom="16dp"/>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp">
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contraseña"
+        android:textColorHint="@color/black"
+        android:inputType="textPassword"
+        android:textColor="#000000"
+        android:layout_marginBottom="24dp"/>
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@mipmap/ic_logo"
-                android:layout_gravity="center"
-                android:contentDescription="Logo NutriFit"
-                android:layout_marginBottom="12dp"/>
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Iniciar sesión"
+        android:backgroundTint="#BBDEFB"
+        android:textColor="#000000"
+        android:layout_marginBottom="16dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bienvenido a NutriFit"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="#333333"
-                android:layout_gravity="center"
-                android:layout_marginBottom="24dp"/>
-
-            <EditText
-                android:id="@+id/etEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Correo electrónico"
-                android:textColor="#000000"
-                android:textColorHint="#757575"
-                android:drawableStart="@android:drawable/ic_dialog_email"
-                android:background="@android:drawable/edit_text"
-                android:padding="12dp"
-                android:layout_marginBottom="12dp"/>
-
-            <EditText
-                android:id="@+id/etPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Contraseña"
-                android:drawableStart="@android:drawable/ic_lock_lock"
-                android:background="@android:drawable/edit_text"
-                android:padding="12dp"
-                android:textColor="#000000"
-                android:textColorHint="#757575"
-                android:inputType="textPassword"
-                android:layout_marginBottom="20dp"/>
-
-            <Button
-                android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Iniciar Sesión"
-                android:textStyle="bold"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#4FC3F7"/>
-
-            <TextView
-                android:id="@+id/tvIrRegistro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¿No tienes cuenta? Regístrate"
-                android:textColor="#0077C2"
-                android:textSize="14sp"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"/>
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
+    <TextView
+        android:id="@+id/tvIrRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿No tienes cuenta? Regístrate aquí"
+        android:textColor="#2196F3"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"/>
 </LinearLayout>

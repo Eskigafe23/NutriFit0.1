@@ -1,44 +1,67 @@
 package com.example.nutrifit
 
 import android.content.Intent
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.nutrifit.data.UserDBHelper
+import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var prefs: SharedPreferences
+    private lateinit var dbHelper: UserDBHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        prefs = getSharedPreferences("NutriFitPrefs", MODE_PRIVATE)
+        dbHelper = UserDBHelper(this)
 
         val etNombre = findViewById<EditText>(R.id.etNombre)
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etPassword = findViewById<EditText>(R.id.etPassword)
+        val etConfirmPassword = findViewById<EditText>(R.id.etConfirmPassword)
         val btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
         val tvIrLogin = findViewById<TextView>(R.id.tvIrLogin)
 
         btnRegistrar.setOnClickListener {
-            val nombre = etNombre.text.toString()
-            val email = etEmail.text.toString()
+            val nombre = etNombre.text.toString().trim()
+            val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString()
+            val confirmPassword = etConfirmPassword.text.toString()
 
-            if (nombre.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show()
-            } else {
-                val editor = prefs.edit()
-                editor.putString("nombre", nombre)
-                editor.putString("email", email)
-                editor.putString("password", password)
-                editor.apply()
+            when {
+                nombre.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() ->
+                    showToast("Por favor completa todos los campos")
 
-                Toast.makeText(this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
+                !nombre.matches(Regex("^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$")) ->
+                    showToast("El nombre solo puede contener letras")
+
+                !email.endsWith("@gmail.com") ->
+                    showToast("El correo debe terminar en @gmail.com")
+
+                !isValidPassword(password) ->
+                    showToast("La contraseña debe tener al menos una mayúscula y un número")
+
+                password != confirmPassword ->
+                    showToast("Las contraseñas no coinciden")
+
+                else -> {
+                    val db = dbHelper.writableDatabase
+                    val query = "INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)"
+                    val stmt = db.compileStatement(query)
+                    stmt.bindString(1, nombre)
+                    stmt.bindString(2, email)
+                    stmt.bindString(3, password)
+                    stmt.executeInsert()
+
+                    showToast("Usuario registrado correctamente")
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
+                }
             }
         }
 
@@ -46,5 +69,14 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun isValidPassword(password: String): Boolean {
+        val pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[0-9]).{6,}$")
+        return pattern.matcher(password).matches()
     }
 }

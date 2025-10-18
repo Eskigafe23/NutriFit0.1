@@ -8,6 +8,11 @@
     <string name="nav_tips">Tips de Nutrición</string>
     <string name="nav_calorias">Calculadora de Calorías</string>
 
+    <string-array name="objetivos">
+        <item>Bajar de peso</item>
+        <item>Mantener peso</item>
+        <item>Ganar masa muscular</item>
+    </string-array>
     <string name="navigation_drawer_open">Abrir menú</string>
     <string name="navigation_drawer_close">Cerrar menú</string>
 </resources>
