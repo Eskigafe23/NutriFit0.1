@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".PlanActivity" />
         <activity android:name=".TipsActivity" />
+        <activity android:name=".CaloriasActivity" />
     </application>
 
 </manifest>

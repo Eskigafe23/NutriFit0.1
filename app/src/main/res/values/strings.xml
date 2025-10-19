@@ -13,6 +13,7 @@
         <item>Mantener peso</item>
         <item>Ganar masa muscular</item>
     </string-array>
+
     <string name="navigation_drawer_open">Abrir menú</string>
     <string name="navigation_drawer_close">Cerrar menú</string>
 </resources>

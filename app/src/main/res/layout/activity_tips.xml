@@ -37,6 +37,16 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tips de Nutrición"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="12dp" />
+
                 <!-- Tarjeta 1 -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"

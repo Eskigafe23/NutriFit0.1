@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 🔹 Botones principales del Home
-        val btnPlan = findViewById<Button>(R.id.btnPlan)
+        val btnPlan = findViewById<Button>(R.id.btnComenzar)
         val btnTips = findViewById<Button>(R.id.btnTips)
         val btnCalorias = findViewById<Button>(R.id.btnCalorias)
 
