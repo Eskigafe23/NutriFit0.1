@@ -29,7 +29,6 @@ class PlanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plan)
 
-        // Configurar Toolbar y menú
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -39,6 +38,10 @@ class PlanActivity : AppCompatActivity() {
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Recuperar correo desde SharedPreferences
+        val sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE)
+        val emailUsuario = sharedPref.getString("email_usuario", null)
+
         val navView: NavigationView = findViewById(R.id.nav_view)
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -47,9 +50,12 @@ class PlanActivity : AppCompatActivity() {
                     finish()
                 }
                 R.id.nav_perfil -> {
-                    Toast.makeText(this, "Abrir perfil (en construcción)", Toast.LENGTH_SHORT).show()
+                    val intentPerfil = Intent(this, PerfilActivity::class.java)
+                    intentPerfil.putExtra("email_usuario", emailUsuario)
+                    startActivity(intentPerfil)
                 }
                 R.id.nav_cerrar_sesion -> {
+                    sharedPref.edit().clear().apply()
                     Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
@@ -60,14 +66,12 @@ class PlanActivity : AppCompatActivity() {
             true
         }
 
-        // Configurar RecyclerView
         recyclerView = findViewById(R.id.recyclerPlan)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         adapter = PlanAdapter(generarPlanAleatorio().toMutableList())
         recyclerView.adapter = adapter
 
-        // Botón para generar un nuevo plan
         val btnGenerar = findViewById<Button>(R.id.btnGenerar)
         btnGenerar.setOnClickListener {
             adapter.actualizarPlan(generarPlanAleatorio())

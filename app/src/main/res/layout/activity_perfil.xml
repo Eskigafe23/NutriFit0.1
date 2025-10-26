@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#BBDEFB"
+            app:title="NutriFit"
+            app:titleTextColor="@color/black"
+            app:navigationIconTint="#000000" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imgPerfil"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/perfil"
+                    android:background="@drawable/circle_g"
+                    android:padding="4dp"
+                    android:layout_marginBottom="16dp" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="3dp"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="#F5F5F5">
+
+                    <EditText
+                        android:id="@+id/etNombrePerfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nombre"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:enabled="false"
+                        android:padding="12dp"
+                        android:background="@android:color/transparent" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="3dp"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="#F5F5F5">
+
+                    <EditText
+                        android:id="@+id/etEmailPerfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Correo"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:enabled="false"
+                        android:padding="12dp"
+                        android:background="@android:color/transparent" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="3dp"
+                    android:layout_marginBottom="20dp"
+                    android:backgroundTint="#F5F5F5">
+
+                    <EditText
+                        android:id="@+id/etPasswordPerfil"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Contraseña"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:enabled="false"
+                        android:padding="12dp"
+                        android:inputType="textPassword"
+                        android:background="@android:color/transparent" />
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btnEditar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Editar perfil"
+                    android:backgroundTint="#BBDEFB"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="10dp" />
+
+                <Button
+                    android:id="@+id/btnGuardar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Guardar cambios"
+                    android:visibility="gone"
+                    android:backgroundTint="#BBDEFB"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="10dp" />
+
+                <Button
+                    android:id="@+id/btnEliminar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Eliminar cuenta"
+                    android:backgroundTint="#FFCDD2"
+                    android:textColor="#000000" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#FFFFFF"
+        app:itemTextColor="#000000"
+        app:menu="@menu/activity_main_drawer"
+        app:headerLayout="@layout/nav_header_main" />
+</androidx.drawerlayout.widget.DrawerLayout>

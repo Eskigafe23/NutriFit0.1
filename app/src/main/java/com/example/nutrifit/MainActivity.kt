@@ -20,18 +20,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 🔹 Configurar Toolbar
+        // Toolbar
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        // 🔹 Configurar DrawerLayout
+        // Drawer Layout
         drawerLayout = findViewById(R.id.drawer_layout)
         toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // 🔹 Configurar NavigationView
+        // Recuperar correo desde SharedPreferences
+        val sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE)
+        val emailUsuario = sharedPref.getString("email_usuario", null)
+
+        // NavigationView
         val navView: NavigationView = findViewById(R.id.nav_view)
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -39,9 +43,12 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Ya estás en inicio", Toast.LENGTH_SHORT).show()
                 }
                 R.id.nav_perfil -> {
-                    Toast.makeText(this, "Abrir perfil (en construcción)", Toast.LENGTH_SHORT).show()
+                    val intentPerfil = Intent(this, PerfilActivity::class.java)
+                    intentPerfil.putExtra("email_usuario", emailUsuario)
+                    startActivity(intentPerfil)
                 }
                 R.id.nav_cerrar_sesion -> {
+                    sharedPref.edit().clear().apply()
                     Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
@@ -52,35 +59,26 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // 🔹 Botones principales del Home
+        // Botones principales del Home
         val btnPlan = findViewById<Button>(R.id.btnComenzar)
         val btnTips = findViewById<Button>(R.id.btnTips)
         val btnCalorias = findViewById<Button>(R.id.btnCalorias)
 
-        // 🔸 Acción del botón "Ver Plan Alimenticio"
         btnPlan.setOnClickListener {
-            val intent = Intent(this, PlanActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, PlanActivity::class.java))
         }
 
-        // 🔸 Acción del botón "Tips de Nutrición"
         btnTips.setOnClickListener {
-            val intent = Intent(this, TipsActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, TipsActivity::class.java))
         }
 
-        // 🔸 Acción del botón "Calculadora de Calorías"
         btnCalorias.setOnClickListener {
-            val intent = Intent(this, CaloriasActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, CaloriasActivity::class.java))
         }
     }
 
-    // 🔹 Necesario para que funcione el botón del menú lateral (hamburguesa)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true
-        }
+        if (toggle.onOptionsItemSelected(item)) return true
         return super.onOptionsItemSelected(item)
     }
 }

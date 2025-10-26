@@ -25,8 +25,8 @@ class LoginActivity : AppCompatActivity() {
         val tvIrRegister = findViewById<TextView>(R.id.tvIrRegister)
 
         btnLogin.setOnClickListener {
-            val email = etEmail.text.toString()
-            val password = etPassword.text.toString()
+            val email = etEmail.text.toString().trim()
+            val password = etPassword.text.toString().trim()
 
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
@@ -37,12 +37,17 @@ class LoginActivity : AppCompatActivity() {
 
                 if (cursor.moveToFirst()) {
                     Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
+
+                    val sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE)
+                    sharedPref.edit().putString("email_usuario", email).apply()
+
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
-                } else {
+            } else {
                     Toast.makeText(this, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show()
                 }
                 cursor.close()
+                db.close()
             }
         }
 

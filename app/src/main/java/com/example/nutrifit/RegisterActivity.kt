@@ -50,17 +50,15 @@ class RegisterActivity : AppCompatActivity() {
                     showToast("Las contraseñas no coinciden")
 
                 else -> {
-                    val db = dbHelper.writableDatabase
-                    val query = "INSERT INTO usuarios (nombre, email, password) VALUES (?, ?, ?)"
-                    val stmt = db.compileStatement(query)
-                    stmt.bindString(1, nombre)
-                    stmt.bindString(2, email)
-                    stmt.bindString(3, password)
-                    stmt.executeInsert()
+                    val registrado = dbHelper.insertUser(nombre, email, password)
 
-                    showToast("Usuario registrado correctamente")
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
+                    if (registrado) {
+                        showToast("Usuario registrado correctamente")
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
+                    } else {
+                        showToast("El correo ya está registrado")
+                    }
                 }
             }
         }

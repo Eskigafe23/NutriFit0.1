@@ -29,6 +29,10 @@ class TipsActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Recuperar correo desde SharedPreferences
+        val sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE)
+        val emailUsuario = sharedPref.getString("email_usuario", null)
+
         val navView: NavigationView = findViewById(R.id.nav_view)
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -37,11 +41,14 @@ class TipsActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.nav_perfil -> {
-                    Toast.makeText(this, "Abrir perfil (en construcción)", Toast.LENGTH_SHORT).show()
+                    val intentPerfil = Intent(this, PerfilActivity::class.java)
+                    intentPerfil.putExtra("email_usuario", emailUsuario)
+                    startActivity(intentPerfil)
                 }
                 R.id.nav_cerrar_sesion -> {
-                    val intent = Intent(this, LoginActivity::class.java)
+                    sharedPref.edit().clear().apply()
                     Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
                 }

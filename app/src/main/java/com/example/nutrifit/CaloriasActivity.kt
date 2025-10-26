@@ -21,18 +21,19 @@ class CaloriasActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calorias)
 
-        // 🔹 Configurar Toolbar
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        // 🔹 Configurar DrawerLayout
         drawerLayout = findViewById(R.id.drawer_layout)
         toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // 🔹 Configurar NavigationView
+        // Recuperar correo desde SharedPreferences
+        val sharedPref = getSharedPreferences("UserSession", MODE_PRIVATE)
+        val emailUsuario = sharedPref.getString("email_usuario", null)
+
         val navView: NavigationView = findViewById(R.id.nav_view)
         navView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -41,9 +42,12 @@ class CaloriasActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.nav_perfil -> {
-                    Toast.makeText(this, "Abrir perfil (en construcción)", Toast.LENGTH_SHORT).show()
+                    val intentPerfil = Intent(this, PerfilActivity::class.java)
+                    intentPerfil.putExtra("email_usuario", emailUsuario)
+                    startActivity(intentPerfil)
                 }
                 R.id.nav_cerrar_sesion -> {
+                    sharedPref.edit().clear().apply()
                     Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
